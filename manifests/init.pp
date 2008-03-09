@@ -1,48 +1,25 @@
-# modules/skeleton/manifests/init.pp - manage skeleton stuff
+# modules/dcc/manifests/init.pp - manage dcc stuff
 # Copyright (C) 2007 admin@immerda.ch
 # GPLv3
+# please not this module is part of a whole series of modules
 
-# modules_dir { "skeleton": }
+# modules_dir { "dcc": }
 
-class skeleton {
+class dcc {
     case $operatingsystem {
-        gentoo: { include skeleton::gentoo }
-        default: { include skeleton::base }
+        gentoo: { include dcc::gentoo }
+        default: { include dcc::base }
     }
 }
 
-class skeleton::base {
-    package{'skeleton':
+class dcc::base {
+    package{'dcc':
         ensure => installed,
     }
-
-    service{skeleton:
-        ensure => running,
-        enable => true,
-        #hasstatus => true, #fixme!
-        require => Package[skeleton],
-    }
-
 }
 
-class skeleton::gentoo inherits skeleton::base {
-    Package[skeleton]{
-        category => 'some-category',
+class dcc::gentoo inherits dcc::base {
+    Package[dcc]{
+        category => 'mail-filter',
     }
-
-    #conf.d file if needed
-#    Service[skeleton]{
-#       require +> File["/etc/conf.d/skeleton"],
-#    }
-#    file { "/etc/conf.d/skeleton":
-#        owner => "root",
-#        group => "0",
-#        mode  => 644,
-#        ensure => present,
-#        source => [
-#            "puppet://$server/dist/skeleton/conf.d/${fqdn}/skeleton",
-#            "puppet://$server/dist/skeleton/conf.d/skeleton",
-#            "puppet://$server/skeleton/conf.d/skeleton"
-#        ]
-#    }
 }
