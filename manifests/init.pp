@@ -4,7 +4,7 @@
 # please not this module is part of a whole series of modules
 
 class dcc {
-  case $operatingsystem {
+  case $::operatingsystem {
     gentoo: { include dcc::gentoo }
     default: { include dcc::base }
   }
